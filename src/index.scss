@@ -1,0 +1,400 @@
+@use "sass:math";
+@import url(https://fonts.googleapis.com/css?family=Inter:,300,regular,600.700);
+
+// Percent
+@function prc($pxOne, $pxTwo) {
+	$result: math.div($pxOne, $pxTwo) * 100%;
+	@return $result;
+}
+
+// EM
+@function em($px) {
+	$result: math.div($px, 16) + em;
+	@return $result;
+}
+
+// REM
+@function rem($px) {
+	$result: math.div($px, 16) + rem;
+	@return $result;
+}
+
+$fontFamily: "Inter";
+$fontSize: rem(16);
+
+* {
+	padding: 0px;
+	margin: 0px;
+	border: 0px;
+}
+*,
+*:before,
+*:after {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+/* :focus,
+:active {
+	// outline: none;
+}
+a:focus,
+a:active {
+	// outline: none;
+} */
+aside,
+nav,
+footer,
+header,
+section {
+	display: block;
+}
+html {
+	font-size: #{$fontSize + px};
+}
+html,
+body {
+	height: 100%;
+	min-width: rem(320);
+}
+body {
+	line-height: 1;
+	font-family: $fontFamily;
+	//text-rendering: optimizeLegibility;
+	-ms-text-size-adjust: 100%;
+	-moz-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+}
+input,
+button,
+textarea {
+	font-family: $fontFamily;
+	font-size: inherit;
+}
+input::-ms-clear {
+	display: none;
+}
+button {
+	cursor: pointer;
+	background-color: inherit;
+}
+button::-moz-focus-inner {
+	padding: 0;
+	border: 0;
+}
+a,
+a:visited {
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: none;
+}
+ul li {
+	list-style: none;
+}
+img {
+	vertical-align: top;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-weight: inherit;
+	font-size: inherit;
+}
+//-webkit-overflow-scrolling: touch;
+/*
+&::-webkit-scrollbar {
+	display: none;
+}
+*/
+// -webkit-tap-highlight-color: rgba(0, 0, 0, 0); 
+// Убирает отображение нажатия
+
+#root {
+	width: 100%;
+	height: 100%;
+	background-color: #000;
+}
+
+.chat {
+	width: 100%;
+	height: 100vh;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	&__container {
+		width: rem(450);
+	}
+}
+
+
+.chat-login {
+	padding: rem(35);
+	background-color: #fff;
+	border-radius: rem(8);
+	&__form {
+		display: flex;
+		flex-direction: column;
+	}
+	&__title {
+		letter-spacing: -0.011em;
+		font-size: rem(32);
+		line-height: rem(24);
+		color: #575DFB;
+		font-weight: bold;
+		margin-bottom: rem(25);
+	}
+	&__text {
+		letter-spacing: -0.011em;
+		font-size: rem(18);
+		line-height: rem(26);
+		color: #000;
+		margin-bottom: rem(30);
+	}
+	&__input {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		margin-bottom: rem(25);
+	}
+	&__name {
+		margin-bottom: rem(6);
+		letter-spacing: -0.011em;
+		font-size: rem(16);
+		line-height: rem(24);
+		color: #000000;
+	}
+	&__row {
+		position: relative;
+	}
+	&__icon {
+		position: absolute;
+		top: 50%;
+		left: rem(15);
+		transform: translate(0, -50%);
+	}
+	&__field {
+		width: 100%;
+		height: rem(56);
+		border: 2px solid#575DFB;
+		border-radius: rem(16);
+		padding-left: rem(45);
+		color: #C8C8C8;
+		font-size: rem(16);
+		line-height: rem(24);
+		letter-spacing: -0.011em;
+		&:focus {
+			outline: none;
+		}
+	}
+	&__validate {
+		display: none;
+	}
+	&__button {
+		height: rem(56);
+		width: 100%;
+		background-color: #575DFB;
+		border-radius: rem(16);
+		letter-spacing: -0.011em;
+		font-size: rem(16);
+		line-height: rem(24);
+		font-weight: bold;
+		color: #fff;
+		cursor: pointer;
+		transition: all 0.3s ease 0s;
+		@media(any-hover : hover){
+			&:hover {
+				background-color: #575dfbb4;
+			}
+		}
+	}
+}
+
+
+
+.chat-app {
+	height: rem(600);
+	display: flex;
+	flex-direction: column;
+	border-radius: rem(8);
+	background-color: #fff;
+	overflow: hidden;
+	&__top {
+		background-color: rgb(153, 153, 153);
+		padding: rem(20) rem(30);
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	&__name {
+		font-weight: bold;
+		font-size: rem(18);
+	}
+	&__icons {
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		background-color: #fff;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	&__user {
+		display: flex;
+		align-items: center;
+		gap: rem(20);
+	}
+	&__logout {
+		font-size: rem(18);
+		line-height: rem(20);
+		font-weight: bold;
+		cursor: pointer;
+		transition: all 0.3s ease 0s;
+		@media(any-hover : hover){
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+	}
+	&__field {
+		flex: 1 1 auto;
+		display: flex;
+		flex-direction: column;
+		gap: rem(35);
+		padding: rem(30);
+		overflow: auto;
+		margin-right: rem(3);
+		&::-webkit-scrollbar {
+			width: rem(5);
+		}
+		&::-webkit-scrollbar-track {
+			background-color: transparent;
+		}
+		&::-webkit-scrollbar-thumb {
+			background-color: rgba(0, 0, 0, 0.284);
+			border-radius: rem(10);
+			transition: all 1s ease 0s;
+		}
+		&::-webkit-scrollbar-thumb:hover {
+			background-color: rgba(0, 0, 0, 0.54);
+			transition: all 1s ease 0s;
+			cursor: pointer;
+		}
+	}
+	&__list {
+		display: flex;
+		flex-direction: column;
+	
+	}
+	&__actions {
+
+	}
+}
+
+.chat-actions {
+	flex: 0 0 rem(80);
+	border-top: 1px solid rgba(0, 0, 0, 0.05);
+	padding: 0 rem(35);
+	&__form {
+		height: 100%;
+		display: flex;
+		align-items: center;
+		gap: rem(20);
+	}
+	&__emojis {
+		cursor: pointer;
+	}
+	&__textinput {
+		flex: 1 1 auto;
+		input {
+			&:focus {
+				outline: none;
+			}
+		}
+	}
+	&__images {
+		font-size: rem(22);
+		color: rgb(128, 128, 128);
+		cursor: pointer;
+	}
+	&__submit {
+		position: relative;
+		background-color: #4629F2;
+		height: rem(40);
+		width: rem(40);
+		border-radius: 50%;
+		input {
+			height: rem(40);
+			width: rem(40);
+			border-radius: 50%;
+			background-color: transparent;
+			cursor: pointer;
+			position: relative;
+			z-index: 4;
+		}
+	}
+	&__arrow {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+}
+
+
+.message {
+	display: inline-flex;
+	&__body {
+		display: flex;
+		flex-direction: column;
+		gap: rem(5);
+	}
+	&__text {
+		border-radius: 0 0 rem(10) rem(10);
+		padding: rem(10) rem(15);
+		display: flex;
+		justify-content: center;
+	}
+	&__time {
+		color: rgba(13, 8, 44, 0.4);
+		font-size: rem(14);
+		line-height: rem(18);
+	}
+}
+
+.personal-message {
+	justify-content: flex-end;
+	&__text {
+		max-width: rem(300);
+		background-color: #4629F2;
+		color: #fff;
+		border-top-left-radius: rem(10);
+	}
+	&__time {
+	}
+}
+
+.other-message {
+	justify-content: flex-start;
+	&__name {
+		font-size: rem(16);
+		line-height: rem(20);
+		font-weight: 600;
+		color: #0D082C;
+	}
+	&__text {
+		max-width: rem(300);
+		background-color: #F1F7FF;
+		color: #fff;
+		border-top-right-radius: rem(10);
+		color: #0D082C;
+	}
+	&__time {
+		align-self: flex-end;
+	}
+}
