@@ -8,6 +8,13 @@ import { addMessage, allMessages } from '../features/messages/messagesSlice';
 import { nanoid } from 'nanoid';
 import { logout } from '../features/users/usersSlice';
 
+
+function dateFormatter() {
+	const currentTime = new Date();
+	const formattedCurrentTime = `${currentTime.getHours()}:${currentTime.getMinutes()}`;
+	return formattedCurrentTime;
+}
+
 function Chat() {
 	const dispatch = useDispatch();
 	const messages = useSelector(allMessages);
@@ -15,6 +22,14 @@ function Chat() {
 
 	const [text, setText] = useState('');
 	const chatFieldRef = useRef(null);
+	useEffect(() => {
+		const chatFieldElem = chatFieldRef.current;
+		const coords = chatFieldElem.scrollHeight - chatFieldElem.clientHeight - chatFieldElem.scrollTop;
+		chatFieldElem.scrollBy({
+			top: coords,
+			behavior: 'auto'
+		})
+	}, [])
 	useEffect(() => {
 		const chatFieldElem = chatFieldRef.current;
 		const coords = chatFieldElem.scrollHeight - chatFieldElem.clientHeight - chatFieldElem.scrollTop;
@@ -30,7 +45,7 @@ function Chat() {
 	}
 	const submitHandler = event => {
 		event.preventDefault();
-		dispatch(addMessage({ id: nanoid(), user: currentUser, text }));
+		dispatch(addMessage({ id: nanoid(), user: currentUser, text, currentDate: dateFormatter() }));
 		setText('');
 	}
 	const logoutHandler = event => {
@@ -40,9 +55,9 @@ function Chat() {
 	const chat = Object.values(messages).map(message => (
 		<li key={message.id} className='chat-app__list'>
 			{message.user === currentUser ?
-				<PersonalMessage message={message.text} />
+				<PersonalMessage message={message.text} currentDate={message.currentDate} />
 				:
-				<OtherMessage message={message.text} name={message.user} />
+				<OtherMessage message={message.text} name={message.user} currentDate={message.currentDate} />
 			}
 		</li>
 	))

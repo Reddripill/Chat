@@ -9,6 +9,7 @@ import {
 	PURGE,
 	REGISTER,
 } from 'redux-persist';
+import { createStateSyncMiddleware, initMessageListener } from 'redux-state-sync';
 import storage from 'redux-persist/lib/storage';
 import usersReducer from '../features/users/usersSlice';
 import messagesReducer from '../features/messages/messagesSlice';
