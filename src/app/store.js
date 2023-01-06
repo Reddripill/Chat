@@ -14,6 +14,9 @@ import storage from 'redux-persist/lib/storage';
 import usersReducer from '../features/users/usersSlice';
 import messagesReducer from '../features/messages/messagesSlice';
 
+const LOGIN = 'users/login';
+const LOGOUT = 'users/logout';
+
 const rootReducer = combineReducers({
 	users: usersReducer,
 	messages: messagesReducer,
@@ -24,7 +27,12 @@ const persistConfig = {
 	storage,
 }
 
-const persistedReducer = persistReducer(persistConfig, rootReducer)
+const config = {
+	blacklist: ['TOGGLE_TODO', PERSIST, REHYDRATE, LOGIN, LOGOUT],
+	broadcastChannelOption: { type: 'localstorage' },
+}
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({
 	reducer: persistedReducer,
@@ -33,9 +41,11 @@ const store = configureStore({
 			serializableCheck: {
 				ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
 			},
-		}),
+		}).concat(createStateSyncMiddleware(config))
 });
 
-export const persistor = persistStore(store)
+export const persistor = persistStore(store);
+
+initMessageListener(store);
 
 export default store;
