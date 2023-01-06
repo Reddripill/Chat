@@ -11,7 +11,14 @@ import { logout } from '../features/users/usersSlice';
 
 function dateFormatter() {
 	const currentTime = new Date();
-	const formattedCurrentTime = `${currentTime.getHours()}:${currentTime.getMinutes()}`;
+	let currentDate = [currentTime.getHours(), currentTime.getMinutes()].map(item => {
+		if (item < 10) {
+			item = '0' + item;
+		}
+		return item;
+	})
+	const [formattedCurrentHours, formattedCurrentMinutes] = currentDate;
+	const formattedCurrentTime = `${formattedCurrentHours}:${formattedCurrentMinutes}`;
 	return formattedCurrentTime;
 }
 
@@ -45,8 +52,10 @@ function Chat() {
 	}
 	const submitHandler = event => {
 		event.preventDefault();
-		dispatch(addMessage({ id: nanoid(), user: currentUser, text, currentDate: dateFormatter() }));
-		setText('');
+		if (text !== '') {
+			dispatch(addMessage({ id: nanoid(), user: currentUser, text, currentDate: dateFormatter() }));
+			setText('');
+		}
 	}
 	const logoutHandler = event => {
 		dispatch(logout());

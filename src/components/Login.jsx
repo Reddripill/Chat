@@ -1,17 +1,19 @@
-import React, { useState } from 'react'
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { login } from '../features/users/usersSlice';
+import useInput from '../hooks/useValidate';
 
 function Login() {
 	const dispatch = useDispatch();
-	const [userName, setUserName] = useState('');
-	const changeHandler = event => {
-		setUserName(event.target.value);
-	}
+
+	const name = useInput('', 'chat-login__field', { isEmpty: true, minLength: 3 });
+	const allErrors = name.error;
+
 	const submitHandler = event => {
 		event.preventDefault();
-		dispatch(login({ user: userName }))
-		setUserName('')
+		if (!allErrors) {
+			dispatch(login({ user: name.value }))
+		}
 	}
 	return (
 		<div className="chat-login">
@@ -27,20 +29,24 @@ function Login() {
 						<input
 							type="text"
 							name='chat-login__field'
-							className="chat-login__field"
-							value={userName}
-							onChange={changeHandler}
+							className={name.classname}
+							value={name.value}
+							onChange={name.changeHandler}
+							onBlur={name.blurHandler}
 						/>
 					</div>
-					<label htmlFor="chat-login__field" className="chat-login__validate">
-						Enter the name
-					</label>
+					{name.isDirty && name.error &&
+						<label htmlFor="chat-login__field" className="chat-login__validate">
+							Enter the name
+						</label>
+					}
 				</div>
 				<input
 					type='submit'
 					className="chat-login__button"
 					name='chat-login__button'
 					value='Register'
+					disabled={allErrors}
 				/>
 			</form>
 		</div>
