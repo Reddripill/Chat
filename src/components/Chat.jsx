@@ -29,6 +29,7 @@ function Chat() {
 	const dispatch = useDispatch();
 	const messages = useSelector(allMessages);
 	const currentUser = useSelector(state => state.users.currentUser);
+	const processedCurrentUser = currentUser.slice(0, 1).toUpperCase() + currentUser.slice(1);
 
 	const { isDark } = useTheme();
 
@@ -58,7 +59,7 @@ function Chat() {
 	const submitHandler = event => {
 		event.preventDefault();
 		if (text !== '') {
-			dispatch(addMessage({ id: nanoid(), user: currentUser, text, currentDate: dateFormatter() }));
+			dispatch(addMessage({ id: nanoid(), user: processedCurrentUser, text, currentDate: dateFormatter() }));
 			setText('');
 		}
 	}
@@ -68,7 +69,7 @@ function Chat() {
 
 	const chat = Object.values(messages).map(message => (
 		<li key={message.id} className='chat-app__list'>
-			{message.user === currentUser ?
+			{message.user === processedCurrentUser ?
 				<PersonalMessage message={message.text} currentDate={message.currentDate} />
 				:
 				<OtherMessage message={message.text} name={message.user} currentDate={message.currentDate} />
@@ -84,7 +85,7 @@ function Chat() {
 					<div className='chat-app__icons'>
 						<FaUserAlt />
 					</div>
-					<div className="chat-app__name">{currentUser}</div>
+					<div className="chat-app__name">{processedCurrentUser}</div>
 				</div>
 				<div className="chat-app__logout" onClick={logoutHandler}>
 					Leave the Chanel

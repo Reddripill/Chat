@@ -2,21 +2,26 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { login } from '../features/users/usersSlice';
 import useInput from '../hooks/useValidate';
+import cn from 'classnames';
+import useTheme from '../hooks/useTheme';
 
 function Login() {
 	const dispatch = useDispatch();
 
+	const { isDark } = useTheme();
 	const name = useInput('', 'chat-login__field', { isEmpty: true, minLength: 3 });
 	const allErrors = name.error;
 
 	const submitHandler = event => {
 		event.preventDefault();
 		if (!allErrors) {
-			dispatch(login({ user: name.value }))
+			dispatch(login({ user: name.value.toLowerCase() }))
 		}
 	}
 	return (
-		<div className="chat-login">
+		<div className={cn("chat-login", {
+			dark: isDark
+		})}>
 			<form action="#" className="chat-login__form" onSubmit={submitHandler}>
 				<div className="chat-login__title">Register</div>
 				<div className="chat-login__text">

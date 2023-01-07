@@ -4,6 +4,8 @@
 :root {
 	--bg-light: #dcdcdc;
 	--bg-dark: #403f3f;
+	--color-light: #000;
+	--color-dark: #fff;
 	--bg-chat-light: #fff;
 	--bg-chat-dark: #343435;
 	--color-chat-actions-light: rgb(128, 128, 128);
@@ -183,8 +185,13 @@ h6 {
 
 .chat-login {
 	padding: rem(35);
-	background-color: #fff;
+	background-color: var(--bg-chat-light);
+	color: var(--color-light);
 	border-radius: rem(8);
+	&.dark {
+		background-color: var(--bg-chat-dark);
+		color: var(--color-dark);
+	}
 	&__form {
 		display: flex;
 		flex-direction: column;
@@ -201,7 +208,7 @@ h6 {
 		letter-spacing: -0.011em;
 		font-size: rem(18);
 		line-height: rem(26);
-		color: #000;
+		// color: #000;
 		margin-bottom: rem(30);
 	}
 	&__input {
@@ -215,7 +222,7 @@ h6 {
 		letter-spacing: -0.011em;
 		font-size: rem(16);
 		line-height: rem(24);
-		color: #000000;
+		// color: #000000;
 	}
 	&__row {
 		position: relative;
@@ -232,7 +239,7 @@ h6 {
 		border: 2px solid#575DFB;
 		border-radius: rem(16);
 		padding-left: rem(45);
-		color: #000;
+		// color: #000;
 		font-weight: 600;
 		font-size: rem(16);
 		line-height: rem(24);
@@ -373,6 +380,7 @@ h6 {
 	&__textinput {
 		flex: 1 1 auto;
 		input {
+			color: inherit;
 			background-color: transparent;
 			&:focus {
 				outline: none;

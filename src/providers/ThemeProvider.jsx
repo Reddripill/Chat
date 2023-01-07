@@ -1,12 +1,11 @@
 import { createContext, useMemo, useState } from "react";
 
 const initIsDark = JSON.parse(window.localStorage.getItem('isDark'));
-console.log(initIsDark);
 
-export const ThemeContext = createContext({ isDark: false });
+export const ThemeContext = createContext({ isDark: true });
 
 export const ThemeProvider = ({ children }) => {
-	const [isDark, setIsDark] = useState(initIsDark || false);
+	const [isDark, setIsDark] = useState(initIsDark || true);
 
 	const value = useMemo(() => ({ isDark, setIsDark }), [isDark]);
 
