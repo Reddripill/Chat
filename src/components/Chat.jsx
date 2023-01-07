@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { FaUserAlt } from 'react-icons/fa';
+import { FiSmile } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
 import OtherMessage from './OtherMessage';
 import PersonalMessage from './PersonalMessage';
@@ -7,6 +8,8 @@ import { FiImage } from 'react-icons/fi'
 import { addMessage, allMessages } from '../features/messages/messagesSlice';
 import { nanoid } from 'nanoid';
 import { logout } from '../features/users/usersSlice';
+import useTheme from '../hooks/useTheme';
+import cn from 'classnames';
 
 
 function dateFormatter() {
@@ -26,6 +29,8 @@ function Chat() {
 	const dispatch = useDispatch();
 	const messages = useSelector(allMessages);
 	const currentUser = useSelector(state => state.users.currentUser);
+
+	const { isDark } = useTheme();
 
 	const [text, setText] = useState('');
 	const chatFieldRef = useRef(null);
@@ -71,7 +76,9 @@ function Chat() {
 		</li>
 	))
 	return (
-		<div className="chat-app">
+		<div className={cn('chat-app', {
+			dark: isDark
+		})}>
 			<div className="chat-app__top">
 				<div className="chat-app__user">
 					<div className='chat-app__icons'>
@@ -86,10 +93,12 @@ function Chat() {
 			<ul className="chat-app__field" ref={chatFieldRef}>
 				{chat}
 			</ul>
-			<div className="chat-app__actions chat-actions">
+			<div className={cn('chat-app__actions', "chat-actions", {
+				dark: isDark
+			})}>
 				<form action="#" className="chat-actions__form" onSubmit={submitHandler}>
 					<div className="chat-actions__emojis">
-						<img src="img/emojis.svg" alt="emojis" />
+						<FiSmile />
 					</div>
 					<div className="chat-actions__textinput">
 						<input
