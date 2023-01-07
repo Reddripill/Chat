@@ -38,6 +38,7 @@ function Login() {
 							value={name.value}
 							onChange={name.changeHandler}
 							onBlur={name.blurHandler}
+							autoFocus
 						/>
 					</div>
 					{name.isDirty && name.error &&

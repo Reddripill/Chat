@@ -16,6 +16,10 @@
 	--color-message-time-dark: #fff;
 	--color-btn-change-theme-light: rgb(20, 17, 34);
 	--color-btn-change-theme-dark: #ffffff;
+	--bg-button-light: #575DFB;
+	--bg-button-dark: #575dfbb4;
+	--bg-button-disabled-light: #575dfbfb;
+	--bg-button-disabled-dark: #575dfb42;
 }
 
 // Percent
@@ -191,6 +195,12 @@ h6 {
 	&.dark {
 		background-color: var(--bg-chat-dark);
 		color: var(--color-dark);
+		.chat-login__button {
+			background-color: var(--bg-button-dark);
+			&:disabled {
+				background-color: var(--bg-button-disabled-dark);
+			}
+		}
 	}
 	&__form {
 		display: flex;
@@ -208,7 +218,6 @@ h6 {
 		letter-spacing: -0.011em;
 		font-size: rem(18);
 		line-height: rem(26);
-		// color: #000;
 		margin-bottom: rem(30);
 	}
 	&__input {
@@ -222,7 +231,6 @@ h6 {
 		letter-spacing: -0.011em;
 		font-size: rem(16);
 		line-height: rem(24);
-		// color: #000000;
 	}
 	&__row {
 		position: relative;
@@ -239,7 +247,6 @@ h6 {
 		border: 2px solid#575DFB;
 		border-radius: rem(16);
 		padding-left: rem(45);
-		// color: #000;
 		font-weight: 600;
 		font-size: rem(16);
 		line-height: rem(24);
@@ -259,7 +266,7 @@ h6 {
 	&__button {
 		height: rem(56);
 		width: 100%;
-		background-color: #575DFB;
+		background-color: var(--bg-button-light);
 		border-radius: rem(16);
 		letter-spacing: -0.011em;
 		font-size: rem(16);
@@ -268,7 +275,7 @@ h6 {
 		color: #fff;
 		cursor: pointer;
 		&:disabled {
-			background-color: #575dfbb4;
+			background-color: var(--bg-button-disabled-light);
 		}
 	}
 }
