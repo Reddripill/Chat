@@ -87,9 +87,9 @@ function Chat() {
 					</div>
 					<div className="chat-app__name">{processedCurrentUser}</div>
 				</div>
-				<div className="chat-app__logout" onClick={logoutHandler}>
+				<a href='#' className="chat-app__logout" onClick={logoutHandler} tabIndex='0'>
 					Leave the Chanel
-				</div>
+				</a>
 			</div>
 			<ul className="chat-app__field" ref={chatFieldRef}>
 				{chat}
@@ -107,6 +107,8 @@ function Chat() {
 							placeholder='Reply ...'
 							value={text}
 							onChange={changeHandler}
+							tabIndex='1'
+							autoFocus
 						/>
 					</div>
 					<div className="chat-actions__images">
@@ -116,7 +118,7 @@ function Chat() {
 						<div className="chat-actions__arrow">
 							<img src="img/arrow.svg" alt="arrow" />
 						</div>
-						<input type='submit' value='' />
+						<input type='submit' value='' tabIndex='2' />
 					</div>
 				</form>
 			</div>
