@@ -10,6 +10,8 @@ import { nanoid } from 'nanoid';
 import { logout } from '../features/users/usersSlice';
 import useTheme from '../hooks/useTheme';
 import cn from 'classnames';
+import AddImage from './AddImage';
+import useGetFile from '../hooks/useGetFile';
 
 
 function dateFormatter() {
@@ -31,6 +33,7 @@ function Chat() {
 	const currentUser = useSelector(state => state.users.currentUser);
 	const processedCurrentUser = currentUser.slice(0, 1).toUpperCase() + currentUser.slice(1);
 
+	const { setFileHandler, preview, setPreview } = useGetFile();
 	const { isDark } = useTheme();
 
 	const [text, setText] = useState('');
@@ -66,6 +69,9 @@ function Chat() {
 	const logoutHandler = event => {
 		dispatch(logout());
 	}
+	const changeImageHandler = event => {
+		setFileHandler(event);
+	}
 
 	const chat = Object.values(messages).map(message => (
 		<li key={message.id} className='chat-app__list'>
@@ -77,52 +83,69 @@ function Chat() {
 		</li>
 	))
 	return (
-		<div className={cn('chat-app', {
-			dark: isDark
-		})}>
-			<div className="chat-app__top">
-				<div className="chat-app__user">
-					<div className='chat-app__icons'>
-						<FaUserAlt />
-					</div>
-					<div className="chat-app__name">{processedCurrentUser}</div>
-				</div>
-				<a href='#' className="chat-app__logout" onClick={logoutHandler} tabIndex='0'>
-					Leave the Chanel
-				</a>
-			</div>
-			<ul className="chat-app__field" ref={chatFieldRef}>
-				{chat}
-			</ul>
-			<div className={cn('chat-app__actions', "chat-actions", {
+		<>
+			<div className={cn('chat-app', {
 				dark: isDark
 			})}>
-				<form action="#" className="chat-actions__form" onSubmit={submitHandler}>
-					<div className="chat-actions__emojis">
-						<FiSmile />
-					</div>
-					<div className="chat-actions__textinput">
-						<input
-							type="text"
-							placeholder='Reply ...'
-							value={text}
-							onChange={changeHandler}
-							tabIndex='1'
-							autoFocus
-						/>
-					</div>
-					<div className="chat-actions__images">
-						<FiImage />
-					</div>
-					<div className="chat-actions__submit">
-						<div className="chat-actions__arrow">
-							<img src="img/arrow.svg" alt="arrow" />
+				<div className="chat-app__top">
+					<div className="chat-app__user">
+						<div className='chat-app__icons'>
+							<FaUserAlt />
 						</div>
-						<input type='submit' value='' tabIndex='2' />
+						<div className="chat-app__name">{processedCurrentUser}</div>
 					</div>
-				</form>
+					<button className="chat-app__logout" onClick={logoutHandler} tabIndex='0'>
+						Leave the Chanel
+					</button>
+				</div>
+				<ul className="chat-app__field" ref={chatFieldRef}>
+					{chat}
+				</ul>
+				<div className={cn('chat-app__actions', "chat-actions", {
+					dark: isDark
+				})}>
+					<form action="#" className="chat-actions__form" onSubmit={submitHandler}>
+						<div className="chat-actions__emojis">
+							<FiSmile />
+						</div>
+						<div className="chat-actions__textinput">
+							<input
+								type="text"
+								placeholder='Reply ...'
+								value={text}
+								onChange={changeHandler}
+								tabIndex='1'
+								autoFocus
+							/>
+						</div>
+						<div className="chat-actions__images">
+							<input
+								type="file"
+								className="chat-actions__file"
+								onChange={changeImageHandler}
+								onClick={(event) => event.target.value = ''}
+								accept='image/*'
+								multiple
+							/>
+							<FiImage />
+						</div>
+						<div className="chat-actions__submit">
+							<div className="chat-actions__arrow">
+								<img src="img/arrow.svg" alt="arrow" />
+							</div>
+							<input type='submit' value='' tabIndex='2' />
+						</div>
+					</form>
+				</div>
+				{preview.length !== 0 &&
+					<AddImage
+						preview={preview}
+						setFileHandler={setFileHandler}
+						setPreview={setPreview}
+					/>
+				}
 			</div>
-		</div>
+		</>
 	)
 }
 

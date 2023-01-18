@@ -5,7 +5,7 @@ const initIsDark = JSON.parse(window.localStorage.getItem('isDark'));
 export const ThemeContext = createContext({ isDark: true });
 
 export const ThemeProvider = ({ children }) => {
-	const [isDark, setIsDark] = useState(initIsDark || true);
+	const [isDark, setIsDark] = useState(initIsDark);
 
 	const value = useMemo(() => ({ isDark, setIsDark }), [isDark]);
 

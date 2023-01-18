@@ -289,6 +289,7 @@ h6 {
 	border-radius: rem(8);
 	background-color: var(--bg-chat-light);
 	overflow: hidden;
+	position: relative;
 	&.dark {
 		background-color: var(--bg-chat-dark);
 	}
@@ -395,8 +396,23 @@ h6 {
 		}
 	}
 	&__images {
+		position: relative;
 		font-size: rem(22);
-		cursor: pointer;
+		height: rem(22);
+		width: rem(22);
+		overflow: hidden;
+	}
+	&__file {
+		height: 100%;
+		width: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 2;
+		opacity: 0;
+		&::-webkit-file-upload-button {
+			cursor: pointer;
+		}
 	}
 	&__submit {
 		position: relative;
@@ -490,5 +506,111 @@ h6 {
 		.other-message__name {
 			color: var(--color-message-name-dark);
 		}
+	}
+}
+
+
+.add-image {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	padding-top: rem(80);
+	background-color: rgba(255, 255, 255, 0.247);
+	display: flex;
+	align-items: flex-start;
+	justify-content: center;
+	&__wrapper {
+		width: 100%;
+		margin: rem(30) rem(40);
+		padding: rem(20) rem(25);
+		border-radius: rem(16);
+		background-color: #282e33;
+		color: #65b5e0;
+		overflow: hidden;
+	}
+	&__title {
+		font-size: rem(20);
+		font-weight: bold;
+		margin-bottom: rem(20);
+	}
+	&__images {
+		width: 100%;
+		max-height: rem(200);
+		overflow: auto;
+		margin-bottom: rem(20);
+		&::-webkit-scrollbar {
+			width: rem(5);
+		}
+		&::-webkit-scrollbar-track {
+			background-color: transparent;
+		}
+		&::-webkit-scrollbar-thumb {
+			background-color: #7d8084;
+			border-radius: rem(10);
+			transition: all 1s ease 0s;
+		}
+		&::-webkit-scrollbar-thumb:hover {
+			// background-color: rgba(0, 0, 0, 0.54);
+			transition: all 1s ease 0s;
+			cursor: pointer;
+		}
+	}
+	&__image {
+		width: 100%;
+		height: rem(150);
+		overflow: hidden;
+		margin-bottom: rem(2);
+		&:first-child {
+			border-radius: rem(8) rem(8) 0 0;
+		}
+		&:last-child {
+			border-radius: 0 0 rem(8) rem(8);
+		}
+	}
+	&__input {
+		margin-bottom: rem(20);
+	}
+	&__text {
+		font-weight: bold;
+		margin-bottom: rem(15);
+	}
+	&__textinput {
+		width: 100%;
+		height: rem(40);
+		padding-left: rem(8);
+		border: 2px solid #65b5e0;
+		border-radius: rem(8);
+		&:focus {
+			outline: none;
+		}
+	}
+}
+.add-image-actions {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	&__category {
+		display: flex;
+		align-items: center;
+		gap: rem(20);
+	}
+	&__item {
+		padding: rem(8) rem(10);
+		font-weight: bold;
+		cursor: pointer;
+		transition: all 0.3s ease 0s;
+		@media(any-hover : hover){
+			&:hover {
+				background-color: #313b43;
+			}
+		}
+		&_add input {
+			display: none;
+		}
+	}
+	&__label {
+		cursor: pointer;
 	}
 }
