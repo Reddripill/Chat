@@ -124,7 +124,6 @@ function Chat() {
 								className="chat-actions__file"
 								onChange={changeImageHandler}
 								onClick={(event) => event.target.value = ''}
-								accept='image/*'
 								multiple
 							/>
 							<FiImage />

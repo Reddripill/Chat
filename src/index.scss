@@ -562,11 +562,16 @@ h6 {
 		height: rem(150);
 		overflow: hidden;
 		margin-bottom: rem(2);
+		position: relative;
 		&:first-child {
 			border-radius: rem(8) rem(8) 0 0;
 		}
 		&:last-child {
 			border-radius: 0 0 rem(8) rem(8);
+		}
+		img {
+			max-width: 100%;
+			height: auto;
 		}
 	}
 	&__input {
@@ -585,6 +590,22 @@ h6 {
 		&:focus {
 			outline: none;
 		}
+	}
+	&__operations {
+		position: absolute;
+		top: rem(8);
+		right: rem(8);
+		background-color: #a9a9a9;
+		padding: rem(5) rem(8);
+		border-radius: rem(5);
+	}
+	&__operation {
+		color: #fff;
+		font-size: rem(12);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
 	}
 }
 .add-image-actions {

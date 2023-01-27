@@ -1,9 +1,18 @@
-import React from 'react'
+import React from 'react';
+import { FaTrash } from 'react-icons/fa';
 
 function AddImage({ setFileHandler, preview, setPreview }) {
 	const images = preview.map((item, index) => (
 		<div key={index} className="add-image__image">
 			<img src={item} alt='Preview pic' />
+			<div className="add-image__operations">
+				<div
+					className="add-image__operation add-image__operation_remove"
+					onClick={() => setPreview(preview.splice(index, 1))}
+				>
+					<FaTrash />
+				</div>
+			</div>
 		</div>
 	))
 
@@ -13,7 +22,12 @@ function AddImage({ setFileHandler, preview, setPreview }) {
 	return (
 		<div className="add-image">
 			<div className="add-image__wrapper">
-				<div className="add-image__title">Send the image</div>
+				<div className="add-image__title">
+					{preview.length === 0 ?
+						<>Send the image</> :
+						<>Choosed {preview.length} images</>
+					}
+				</div>
 				<div className="add-image__images">
 					{images}
 				</div>

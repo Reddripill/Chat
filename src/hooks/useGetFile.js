@@ -2,20 +2,28 @@ import { useEffect, useState } from "react";
 
 
 function useGetFile() {
-	const [image, setImage] = useState([]);
+	const [image, setImage] = useState();
 	const [preview, setPreview] = useState([]);
-	console.log(preview);
 	useEffect(() => {
 		if (image) {
-			image.forEach(item => {
-				const reader = new FileReader();
-				reader.readAsDataURL(item);
-				reader.onload = () => {
-					setPreview(p => (
-						!p.includes(reader.result) ? p.push(reader.result) : p
-					));
-				}
+			const promises = image.map(item => {
+				return new Promise(resolve => {
+					const reader = new FileReader();
+					reader.readAsDataURL(item);
+					reader.onload = () => {
+						resolve(reader.result);
+					}
+				})
 			})
+			Promise
+				.all(promises)
+				.then(images => {
+					setPreview(prev => {
+						return prev.concat(images).filter((item, position, arr) => {
+							return arr.indexOf(item) === position
+						})
+					})
+				})
 		}
 	}, [image])
 
