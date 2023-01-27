@@ -2,13 +2,17 @@ import React from 'react';
 import { FaTrash } from 'react-icons/fa';
 
 function AddImage({ setFileHandler, preview, setPreview }) {
+	console.log(preview);
+	const removeHandler = index => {
+		setPreview(preview.filter((item, pos) => pos !== index))
+	}
 	const images = preview.map((item, index) => (
 		<div key={index} className="add-image__image">
 			<img src={item} alt='Preview pic' />
 			<div className="add-image__operations">
 				<div
 					className="add-image__operation add-image__operation_remove"
-					onClick={() => setPreview(preview.splice(index, 1))}
+					onClick={() => removeHandler(index)}
 				>
 					<FaTrash />
 				</div>
