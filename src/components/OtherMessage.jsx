@@ -11,7 +11,7 @@ function OtherMessage({ message, name, currentDate }) {
 			<div className="message__body other-message__body">
 				<div className="other-message__name">{name}</div>
 				<div className="message__text other-message__text">{message}</div>
-				<div className="message__time other-message__time">{currentDate}</div>
+				<div className="message__time other-message__time">{currentDate.time}</div>
 			</div>
 		</div>
 	)

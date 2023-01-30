@@ -23,8 +23,8 @@ function dateFormatter() {
 		return item;
 	})
 	const [formattedCurrentHours, formattedCurrentMinutes] = currentDate;
-	const formattedCurrentTime = `${formattedCurrentHours}:${formattedCurrentMinutes}`;
-	return formattedCurrentTime;
+	const time = `${formattedCurrentHours}:${formattedCurrentMinutes}`;
+	return { time, fullDate: currentTime.getTime() };
 }
 
 function Chat() {
@@ -35,6 +35,8 @@ function Chat() {
 
 	const { setFileHandler, preview, setPreview } = useGetFile();
 	const { isDark } = useTheme();
+
+	const formatter = dateFormatter();
 
 	const [text, setText] = useState('');
 	const chatFieldRef = useRef(null);
@@ -62,7 +64,15 @@ function Chat() {
 	const submitHandler = event => {
 		event.preventDefault();
 		if (text !== '') {
-			dispatch(addMessage({ id: nanoid(), user: processedCurrentUser, text, currentDate: dateFormatter() }));
+			dispatch(addMessage({
+				id: nanoid(),
+				user: processedCurrentUser,
+				text,
+				currentDate: {
+					time: formatter.time,
+					fullDate: formatter.fullDate,
+				}
+			}));
 			setText('');
 		}
 	}
@@ -73,15 +83,25 @@ function Chat() {
 		setFileHandler(event);
 	}
 
-	const chat = Object.values(messages).map(message => (
-		<li key={message.id} className='chat-app__list'>
-			{message.user === processedCurrentUser ?
-				<PersonalMessage message={message.text} currentDate={message.currentDate} />
-				:
-				<OtherMessage message={message.text} name={message.user} currentDate={message.currentDate} />
-			}
-		</li>
-	))
+	let currentDate = new Date(0).toLocaleString('en', { month: 'long', day: 'numeric' });
+	const chat = Object.values(messages).map(message => {
+		const prevDate = currentDate;
+		currentDate = new Date(message.currentDate.fullDate).toLocaleString('en', { month: 'long', day: 'numeric' });
+		return (
+			<li key={message.id}>
+				{prevDate !== currentDate &&
+					<div className='message__date'>{currentDate}</div>
+				}
+				<div className='chat-app__list'>
+					{message.user === processedCurrentUser ?
+						<PersonalMessage message={message.text} currentDate={message.currentDate} />
+						:
+						<OtherMessage message={message.text} name={message.user} currentDate={message.currentDate} />
+					}
+				</div>
+			</li>
+		)
+	})
 	return (
 		<>
 			<div className={cn('chat-app', {

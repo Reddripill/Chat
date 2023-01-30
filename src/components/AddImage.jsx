@@ -2,7 +2,6 @@ import React from 'react';
 import { FaTrash } from 'react-icons/fa';
 
 function AddImage({ setFileHandler, preview, setPreview }) {
-	console.log(preview);
 	const removeHandler = index => {
 		setPreview(preview.filter((item, pos) => pos !== index))
 	}

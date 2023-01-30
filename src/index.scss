@@ -14,6 +14,8 @@
 	--color-message-name-dark: rgba(255, 255, 255, 0.7);
 	--color-message-time-light: rgba(13, 8, 44, 0.4);
 	--color-message-time-dark: #fff;
+	--color-message-date-light: #fff;
+	--color-message-date-dark: rgba(13, 8, 44, 0.4);
 	--color-btn-change-theme-light: rgb(20, 17, 34);
 	--color-btn-change-theme-dark: #ffffff;
 	--bg-button-light: #575DFB;
@@ -460,6 +462,12 @@ h6 {
 		display: flex;
 		justify-content: center;
 	}
+	&__date {
+		color: var(--color-message-date-light);
+		display: flex;
+		justify-content: center;
+		margin-bottom: rem(20);
+	}
 	&__time {
 		color: var(--color-message-time-light);
 		font-size: rem(14);
@@ -468,6 +476,9 @@ h6 {
 	&.dark {
 		.message__time {
 			color: var(--color-message-time-dark);
+		}
+		.message__date {
+			color: var(--color-message-date-dark);
 		}
 	}
 }

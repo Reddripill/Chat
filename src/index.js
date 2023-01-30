@@ -24,3 +24,10 @@ root.render(
 		</Provider>
 	</React.StrictMode>
 );
+
+
+const date = new Date();
+const dateStr = date.toLocaleString('en', { month: 'long', day: '2-digit' });
+const newDate = new Date(dateStr);
+console.log(date);
+console.log(newDate);
