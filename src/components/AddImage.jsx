@@ -1,11 +1,25 @@
+import { nanoid } from 'nanoid';
 import React from 'react';
+import { useState } from 'react';
 import { FaTrash } from 'react-icons/fa';
+import { useDispatch } from 'react-redux';
+import { addMessage } from '../features/messages/messagesSlice';
 
-function AddImage({ setFileHandler, preview, setPreview }) {
+function AddImage({
+	setFileHandler,
+	preview,
+	setPreview,
+	currentUser,
+	formatter,
+	setImage
+}) {
+	const dispatch = useDispatch();
+
+	const [value, setValue] = useState('');
 	const removeHandler = index => {
 		setPreview(preview.filter((item, pos) => pos !== index))
 	}
-	const images = preview.map((item, index) => (
+	const images = preview.reverse().map((item, index) => (
 		<div key={index} className="add-image__image">
 			<img src={item} alt='Preview pic' />
 			<div className="add-image__operations">
@@ -19,9 +33,28 @@ function AddImage({ setFileHandler, preview, setPreview }) {
 		</div>
 	))
 
+
 	const cancelHandler = () => {
 		setPreview([]);
+		setImage([]);
 	}
+
+	const submitHandler = () => {
+		dispatch(addMessage({
+			id: nanoid(),
+			user: currentUser,
+			data: {
+				text: value,
+				images: preview
+			},
+			currentDate: {
+				time: formatter.time,
+				fullDate: formatter.fullDate,
+			}
+		}));
+		cancelHandler()
+	}
+
 	return (
 		<div className="add-image">
 			<div className="add-image__wrapper">
@@ -38,8 +71,10 @@ function AddImage({ setFileHandler, preview, setPreview }) {
 					<div className="add-image__text">Signature</div>
 					<input
 						type="text"
+						value={value}
 						className="add-image__textinput"
 						name='add-image__textinput'
+						onChange={event => setValue(event.target.value)}
 						autoFocus
 					/>
 				</div>
@@ -65,14 +100,14 @@ function AddImage({ setFileHandler, preview, setPreview }) {
 						</div>
 						<div
 							className="add-image-actions__item add-image-actions__item_send"
-							onClick={cancelHandler}
+							onClick={submitHandler}
 						>
 							Send
 						</div>
 					</div>
 				</div>
 			</div>
-		</div >
+		</div>
 	)
 }
 

@@ -21,7 +21,7 @@ function useGetFile() {
 					setPreview(prev => {
 						return prev.concat(images).filter((item, position, arr) => {
 							return arr.indexOf(item) === position
-						})
+						}).reverse()
 					})
 				})
 		}
@@ -30,7 +30,7 @@ function useGetFile() {
 	const setFileHandler = event => {
 		setImage(Array.from(event.target.files));
 	}
-	return { setFileHandler, preview, setPreview };
+	return { setFileHandler, preview, setPreview, setImage };
 }
 
 export default useGetFile;

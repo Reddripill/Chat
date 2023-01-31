@@ -5,6 +5,7 @@ import Login from './Login';
 import cn from 'classnames';
 import useTheme from '../hooks/useTheme';
 import Header from './Header';
+import { Outlet } from 'react-router-dom';
 
 
 function Layout() {
@@ -24,6 +25,7 @@ function Layout() {
 					}
 				</div>
 			</div>
+			<Outlet />
 		</div>
 	)
 }

@@ -33,7 +33,7 @@ function Chat() {
 	const currentUser = useSelector(state => state.users.currentUser);
 	const processedCurrentUser = currentUser.slice(0, 1).toUpperCase() + currentUser.slice(1);
 
-	const { setFileHandler, preview, setPreview } = useGetFile();
+	const { setFileHandler, preview, setPreview, setImage } = useGetFile();
 	const { isDark } = useTheme();
 
 	const formatter = dateFormatter();
@@ -61,13 +61,16 @@ function Chat() {
 	const changeHandler = event => {
 		setText(event.target.value);
 	}
+
 	const submitHandler = event => {
 		event.preventDefault();
 		if (text !== '') {
 			dispatch(addMessage({
 				id: nanoid(),
 				user: processedCurrentUser,
-				text,
+				data: {
+					text,
+				},
 				currentDate: {
 					time: formatter.time,
 					fullDate: formatter.fullDate,
@@ -84,7 +87,7 @@ function Chat() {
 	}
 
 	let currentDate = new Date(0).toLocaleString('en', { month: 'long', day: 'numeric' });
-	const chat = Object.values(messages).map(message => {
+	const chat = Object.values(messages).map((message, index, arr) => {
 		const prevDate = currentDate;
 		currentDate = new Date(message.currentDate.fullDate).toLocaleString('en', { month: 'long', day: 'numeric' });
 		return (
@@ -94,9 +97,9 @@ function Chat() {
 				}
 				<div className='chat-app__list'>
 					{message.user === processedCurrentUser ?
-						<PersonalMessage message={message.text} currentDate={message.currentDate} />
+						<PersonalMessage message={message} />
 						:
-						<OtherMessage message={message.text} name={message.user} currentDate={message.currentDate} />
+						<OtherMessage message={message} />
 					}
 				</div>
 			</li>
@@ -161,6 +164,9 @@ function Chat() {
 						preview={preview}
 						setFileHandler={setFileHandler}
 						setPreview={setPreview}
+						currentUser={processedCurrentUser}
+						formatter={formatter}
+						setImage={setImage}
 					/>
 				}
 			</div>

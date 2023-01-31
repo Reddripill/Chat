@@ -21,7 +21,7 @@ function Header() {
 					<FiMoon />
 				}
 			</div>
-		</header >
+		</header>
 	)
 }
 
