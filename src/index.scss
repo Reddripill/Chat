@@ -379,37 +379,56 @@ h6 {
 
 .chat-actions {
 	flex: 0 0 rem(80);
-	border-top: 1px solid rgba(0, 0, 0, 0.05);
+	border-top: 1px solid rgba(0, 0, 0, 0.097);
 	padding: 0 rem(35);
 	color: var(--color-chat-actions-light);
+	display: flex;
+	align-items: flex-end;
 	&.dark {
 		color: var(--color-chat-actions-dark);
 	}
 	&__form {
-		height: 100%;
+		width: 100%;
+		margin: rem(20) 0;
 		display: flex;
-		align-items: center;
+		align-items: flex-end;
 		gap: rem(20);
 	}
 	&__emojis {
+		height: rem(40);
 		font-size: rem(24);
 		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 	&__textinput {
 		flex: 1 1 auto;
-		input {
+		align-self: center;
+		display: flex;
+		align-items: center;
+		textarea {
+			height: rem(20);
+			max-height: rem(200);
+			resize: none;
+			width: 100%;
 			color: inherit;
 			background-color: transparent;
 			&:focus {
 				outline: none;
+			}
+			&::-webkit-scrollbar {
+				width: 0;
 			}
 		}
 	}
 	&__images {
 		position: relative;
 		font-size: rem(22);
-		height: rem(22);
-		width: rem(22);
+		height: rem(40);
+		display: flex;
+		align-items: center;
+		justify-content: center;
 		overflow: hidden;
 	}
 	&__file {
@@ -473,6 +492,7 @@ h6 {
 	}
 	&__text {
 		padding: rem(10) rem(15);
+		overflow-wrap: break-word;
 	}
 	&__date {
 		color: var(--color-message-date-light);

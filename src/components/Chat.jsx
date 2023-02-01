@@ -40,6 +40,7 @@ function Chat() {
 
 	const [text, setText] = useState('');
 	const chatFieldRef = useRef(null);
+	const textinput = useRef(null)
 	useEffect(() => {
 		const chatFieldElem = chatFieldRef.current;
 		const coords = chatFieldElem.scrollHeight - chatFieldElem.clientHeight - chatFieldElem.scrollTop;
@@ -60,8 +61,10 @@ function Chat() {
 
 	const changeHandler = event => {
 		setText(event.target.value);
+		event.target.style.height = `20px`;
+		const scrollHeight = event.target.scrollHeight;
+		event.target.style.height = `${scrollHeight}px`;
 	}
-
 	const submitHandler = event => {
 		event.preventDefault();
 		if (text !== '') {
@@ -77,6 +80,7 @@ function Chat() {
 				}
 			}));
 			setText('');
+			textinput.current.style.height = `20px`;
 		}
 	}
 	const logoutHandler = event => {
@@ -132,11 +136,12 @@ function Chat() {
 							<FiSmile />
 						</div>
 						<div className="chat-actions__textinput">
-							<input
+							<textarea
 								type="text"
 								placeholder='Reply ...'
 								value={text}
 								onChange={changeHandler}
+								ref={textinput}
 								tabIndex='1'
 								autoFocus
 							/>
