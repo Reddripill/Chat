@@ -2,8 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { FaUserAlt } from 'react-icons/fa';
 import { FiSmile } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
-import OtherMessage from './OtherMessage';
-import PersonalMessage from './PersonalMessage';
 import { FiImage } from 'react-icons/fi'
 import { addMessage, allMessages } from '../features/messages/messagesSlice';
 import { nanoid } from 'nanoid';
@@ -12,6 +10,8 @@ import useTheme from '../hooks/useTheme';
 import cn from 'classnames';
 import AddImage from './AddImage';
 import useGetFile from '../hooks/useGetFile';
+import Message from './Message';
+// import ContextMenu from './ContextMenu';
 
 
 function dateFormatter() {
@@ -38,6 +38,8 @@ function Chat() {
 
 	const formatter = dateFormatter();
 
+	const [coords, setCoords] = useState({ top: 0, left: 0 })
+	const [showContextMenu, setShowContextMenu] = useState(false);
 	const [text, setText] = useState('');
 	const chatFieldRef = useRef(null);
 	const textinput = useRef(null)
@@ -58,6 +60,11 @@ function Chat() {
 			behavior: behavior
 		})
 	}, [messages])
+	useEffect(() => {
+		const handleClick = () => setShowContextMenu(false);
+		window.addEventListener('click', handleClick);
+		return window.removeEventListener('click', handleClick);
+	}, [])
 
 	const changeHandler = event => {
 		setText(event.target.value);
@@ -99,13 +106,12 @@ function Chat() {
 				{prevDate !== currentDate &&
 					<div className='message__date'>{currentDate}</div>
 				}
-				<div className='chat-app__list'>
-					{message.user === processedCurrentUser ?
-						<PersonalMessage message={message} />
-						:
-						<OtherMessage message={message} />
-					}
-				</div>
+				<Message
+					message={message}
+					processedCurrentUser={processedCurrentUser}
+					showingContextMenu={setShowContextMenu}
+					setCoords={setCoords}
+				/>
 			</li>
 		)
 	})
@@ -127,6 +133,7 @@ function Chat() {
 				</div>
 				<ul className="chat-app__field" ref={chatFieldRef}>
 					{chat}
+					{/* {showContextMenu && <ContextMenu coords={coords} />} */}
 				</ul>
 				<div className={cn('chat-app__actions', "chat-actions", {
 					dark: isDark

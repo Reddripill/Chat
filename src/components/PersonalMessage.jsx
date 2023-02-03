@@ -11,7 +11,7 @@ function PersonalMessage({ message }) {
 			<Link to={`/image/${message.id + index}`}>
 				<img src={image} id={message.id + index} alt='Input pic' />
 			</Link>
-		</li >
+		</li>
 	))
 	return (
 		<div className={cn("message", "personal-message", {
